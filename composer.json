@@ -1,0 +1,24 @@
+{
+  "name": "alexzy/hyperf-auth",
+  "description": "基于hyper框架的权限认证组件",
+  "type": "library",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "alexzy",
+      "email": "1003057931@qq.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Alexzy\\HyperfAuth\\": "src/"
+    }
+  },
+  "require": {
+    "php": ">=7.2",
+    "hyperf/framework": "^2.0.0",
+    "hyperf/di": "^2.0.0",
+    "hyperf/db-connection": "^2.0.0",
+    "hyperf/http-server": "^2.0.0"
+  }
+}
