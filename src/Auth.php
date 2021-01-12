@@ -5,6 +5,7 @@ declare (strict_types=1);
 namespace Alexzy\HyperfAuth;
 
 use Alexzy\HyperfAuth\AuthInterface\LoginGuardInterface;
+use Alexzy\HyperfAuth\AuthInterface\UserModelInterface;
 use Hyperf\Di\Annotation\Inject;
 
 class Auth
@@ -15,9 +16,14 @@ class Auth
      */
     protected $loginGuard;
 
-    public function login()
+    public function login(UserModelInterface $user)
     {
-        return $this->loginGuard->login();
+        return $this->loginGuard->login($user);
+    }
+
+    public function user()
+    {
+        return $this->loginGuard->user();
     }
 
 }

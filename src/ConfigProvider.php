@@ -17,9 +17,13 @@ use Alexzy\HyperfAuth\AuthInterface\AuthGroupDaoInterface;
 use Alexzy\HyperfAuth\AuthInterface\AuthRuleDaoInterface;
 use Alexzy\HyperfAuth\AuthInterface\LoginGuardInterface;
 use Alexzy\HyperfAuth\AuthInterface\UserDaoInterface;
+use Alexzy\HyperfAuth\AuthInterface\UserModelInterface;
 use Alexzy\HyperfAuth\Dao\AuthGroup;
 use Alexzy\HyperfAuth\Dao\AuthGroupAccess;
 use Alexzy\HyperfAuth\Dao\AuthRule;
+use Alexzy\HyperfAuth\Dao\User as UserDao;
+use Alexzy\HyperfAuth\Guard\Token;
+use Alexzy\HyperfAuth\Model\User as UserModel;
 use Hyperf\Utils\Collection;
 use Hyperf\Utils\Filesystem\Filesystem;
 
@@ -29,11 +33,12 @@ class ConfigProvider
     {
         return [
             'dependencies' => [
-                LoginGuardInterface::class => '',
+                LoginGuardInterface::class => Token::class,
                 AuthGroupAccessDaoInterface::class => AuthGroupAccess::class,
                 AuthGroupDaoInterface::class => AuthGroup::class,
                 AuthRuleDaoInterface::class => AuthRule::class,
-                UserDaoInterface::class => '',
+                UserDaoInterface::class => UserDao::class,
+                UserModelInterface::class => UserModel::class,
             ],
             'commands' => [
             ],
