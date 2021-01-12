@@ -10,7 +10,7 @@ declare(strict_types=1);
  * @license  https://github.com/hyperf/hyperf/blob/master/LICENSE
  */
 
-namespace Ycbl\AdminAuth;
+namespace Alexzy\HyperfAuth;
 
 use Alexzy\HyperfAuth\AuthInterface\AuthGroupAccessDaoInterface;
 use Alexzy\HyperfAuth\AuthInterface\AuthGroupDaoInterface;
@@ -18,10 +18,10 @@ use Alexzy\HyperfAuth\AuthInterface\AuthRuleDaoInterface;
 use Alexzy\HyperfAuth\AuthInterface\LoginGuardInterface;
 use Alexzy\HyperfAuth\AuthInterface\UserDaoInterface;
 use Alexzy\HyperfAuth\Dao\AuthGroup;
+use Alexzy\HyperfAuth\Dao\AuthGroupAccess;
 use Alexzy\HyperfAuth\Dao\AuthRule;
 use Hyperf\Utils\Collection;
 use Hyperf\Utils\Filesystem\Filesystem;
-use Ycbl\AdminAuth\Dao\AuthGroupAccess;
 
 class ConfigProvider
 {

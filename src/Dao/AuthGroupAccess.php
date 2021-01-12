@@ -2,7 +2,7 @@
 
 declare (strict_types=1);
 
-namespace Ycbl\AdminAuth\Dao;
+namespace Alexzy\HyperfAuth\Dao;
 
 use Alexzy\HyperfAuth\AuthInterface\AuthGroupAccessDaoInterface;
 use Alexzy\HyperfAuth\Model\AuthGroupAccess as Model;
