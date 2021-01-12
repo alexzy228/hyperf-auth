@@ -1,15 +1,17 @@
 <?php
 
+declare (strict_types=1);
+
 namespace Alexzy\HyperfAuth;
 
-use Alexzy\HyperfAuth\AuthInterface\LoginGuard;
+use Alexzy\HyperfAuth\AuthInterface\LoginGuardInterface;
 use Hyperf\Di\Annotation\Inject;
 
 class Auth
 {
     /**
      * @Inject()
-     * @var LoginGuard
+     * @var LoginGuardInterface
      */
     protected $loginGuard;
 

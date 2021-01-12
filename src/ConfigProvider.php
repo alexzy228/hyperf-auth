@@ -12,9 +12,16 @@ declare(strict_types=1);
 
 namespace Ycbl\AdminAuth;
 
-use Alexzy\HyperfAuth\AuthInterface\LoginGuard;
+use Alexzy\HyperfAuth\AuthInterface\AuthGroupAccessDaoInterface;
+use Alexzy\HyperfAuth\AuthInterface\AuthGroupDaoInterface;
+use Alexzy\HyperfAuth\AuthInterface\AuthRuleDaoInterface;
+use Alexzy\HyperfAuth\AuthInterface\LoginGuardInterface;
+use Alexzy\HyperfAuth\AuthInterface\UserDaoInterface;
+use Alexzy\HyperfAuth\Dao\AuthGroup;
+use Alexzy\HyperfAuth\Dao\AuthRule;
 use Hyperf\Utils\Collection;
 use Hyperf\Utils\Filesystem\Filesystem;
+use Ycbl\AdminAuth\Dao\AuthGroupAccess;
 
 class ConfigProvider
 {
@@ -22,7 +29,11 @@ class ConfigProvider
     {
         return [
             'dependencies' => [
-                LoginGuard::class => '',
+                LoginGuardInterface::class => '',
+                AuthGroupAccessDaoInterface::class => AuthGroupAccess::class,
+                AuthGroupDaoInterface::class => AuthGroup::class,
+                AuthRuleDaoInterface::class => AuthRule::class,
+                UserDaoInterface::class => '',
             ],
             'commands' => [
             ],

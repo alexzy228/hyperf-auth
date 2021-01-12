@@ -1,8 +1,10 @@
 <?php
 
+declare (strict_types=1);
+
 namespace Alexzy\HyperfAuth\AuthInterface;
 
-interface LoginGuard
+interface LoginGuardInterface
 {
     /**
      * 用户登录方法
