@@ -47,10 +47,10 @@ class ConfigProvider
             'publish' => [
                 [
                     'id' => 'config',
-                    'description' => 'admin_auth 组件配置.', // 描述
+                    'description' => 'auth 组件配置.', // 描述
                     // 建议默认配置放在 publish 文件夹中，文件命名和组件名称相同
-                    'source' => __DIR__ . '/../publish/config/admin_auth.php',  // 对应的配置文件路径
-                    'destination' => BASE_PATH . '/config/autoload/admin_auth.php', // 复制为这个路径下的该文件
+                    'source' => __DIR__ . '/../publish/config/auth.php',  // 对应的配置文件路径
+                    'destination' => BASE_PATH . '/config/autoload/auth.php', // 复制为这个路径下的该文件
                 ],
             ],
         ];

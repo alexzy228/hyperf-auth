@@ -20,5 +20,10 @@
     "hyperf/di": "^2.0.0",
     "hyperf/db-connection": "^2.0.0",
     "hyperf/http-server": "^2.0.0"
+  },
+  "extra": {
+    "hyperf": {
+      "config": "Alexzy\\HyperfAuth\\ConfigProvider"
+    }
   }
 }
