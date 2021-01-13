@@ -41,20 +41,10 @@ class Token implements LoginGuardInterface
      */
     protected $user;
 
-    /**
-     * @var array
-     */
-    private $config;
-
-    public function __construct(ConfigInterface $config)
-    {
-        $this->config = $config->get('auth');
-    }
-
     public function login(UserModelInterface $user)
     {
         $token = $this->makeToken($user->getId());
-        if ($this->config['login_one_user']){
+        if ($this->cache->getConfig()['login_one_user']) {
             $this->cleanUser($user);
         }
         $this->cache->getCache()->set($this->prefixKey($user->getId()) . $token, $user);
@@ -115,7 +105,7 @@ class Token implements LoginGuardInterface
     {
         $user_id = $user->getId();
         $token = $this->prefixKey($user_id);
-        $this->cache->getCache()->delete($token . '*');
+        $this->cache->getCache()->clearPrefix($token);
         return true;
     }
 
