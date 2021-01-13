@@ -31,4 +31,11 @@ interface LoginGuardInterface
      */
     public function logout();
 
+    /**
+     * 强制指定用户退出登录
+     * @param UserModelInterface $user
+     * @return mixed
+     */
+    public function cleanUser(UserModelInterface $user);
+
 }

@@ -9,6 +9,7 @@ use Alexzy\HyperfAuth\AuthInterface\UserModelInterface;
 use Alexzy\HyperfAuth\Exception\AuthException;
 use Alexzy\HyperfAuth\Exception\UnauthorizedException;
 use Alexzy\HyperfAuth\Service\CacheService;
+use Hyperf\Contract\ConfigInterface;
 use Hyperf\Di\Annotation\Inject;
 use Hyperf\HttpServer\Contract\RequestInterface;
 use Hyperf\Snowflake\IdGeneratorInterface;
@@ -40,9 +41,22 @@ class Token implements LoginGuardInterface
      */
     protected $user;
 
+    /**
+     * @var array
+     */
+    private $config;
+
+    public function __construct(ConfigInterface $config)
+    {
+        $this->config = $config->get('auth');
+    }
+
     public function login(UserModelInterface $user)
     {
         $token = $this->makeToken($user->getId());
+        if ($this->config['login_one_user']){
+            $this->cleanUser($user);
+        }
         $this->cache->getCache()->set($this->prefixKey($user->getId()) . $token, $user);
         return $token;
     }
@@ -96,6 +110,15 @@ class Token implements LoginGuardInterface
         return false;
     }
 
+
+    public function cleanUser(UserModelInterface $user)
+    {
+        $user_id = $user->getId();
+        $token = $this->prefixKey($user_id);
+        $this->cache->getCache()->delete($token . '*');
+        return true;
+    }
+
     public function makeToken($user_id)
     {
         $token = md5((string)$this->idGenerator->generate());
@@ -124,4 +147,5 @@ class Token implements LoginGuardInterface
         $token = substr($token, 0, 32);
         return $this->prefixKey($user_id) . $token;
     }
+
 }
