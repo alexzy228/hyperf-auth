@@ -17,7 +17,7 @@ interface LoginGuardInterface
      * 获取用户信息方法
      * @return mixed
      */
-    public function user(): UserModelInterface;
+    public function user(): ?UserModelInterface;
 
     /**
      * 获取用户是否登录方法

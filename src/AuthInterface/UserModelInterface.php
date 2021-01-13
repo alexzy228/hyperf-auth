@@ -7,4 +7,6 @@ namespace Alexzy\HyperfAuth\AuthInterface;
 interface UserModelInterface
 {
     public function getId();
+
+    public function getUserById($id): ?UserModelInterface;
 }
