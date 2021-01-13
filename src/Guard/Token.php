@@ -9,7 +9,6 @@ use Alexzy\HyperfAuth\AuthInterface\UserModelInterface;
 use Alexzy\HyperfAuth\Exception\AuthException;
 use Alexzy\HyperfAuth\Exception\UnauthorizedException;
 use Alexzy\HyperfAuth\Service\CacheService;
-use Hyperf\Contract\ConfigInterface;
 use Hyperf\Di\Annotation\Inject;
 use Hyperf\HttpServer\Contract\RequestInterface;
 use Hyperf\Snowflake\IdGeneratorInterface;
