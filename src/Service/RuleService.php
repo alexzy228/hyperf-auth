@@ -53,7 +53,7 @@ class RuleService
      */
     public function createRule($data)
     {
-        if (!$data['is_menu'] && !$data['pid']) {
+        if (!$data['ismenu'] && !$data['pid']) {
             throw new ErrorException('非菜单规则节点必须有父级');
         }
         return $this->authRuleDao->insertRule($data);
@@ -70,7 +70,7 @@ class RuleService
         if (!$rule) {
             throw new ErrorException('记录未找到');
         }
-        if (!$data['is_menu'] && !$data['pid']) {
+        if (!$data['ismenu'] && !$data['pid']) {
             throw new ErrorException('非菜单规则节点必须有父级');
         }
         if ($data['pid'] != $rule['pid']) {
