@@ -9,6 +9,7 @@ use Alexzy\HyperfAuth\Exception\NeedLoginException;
 use Alexzy\HyperfAuth\Exception\NeedRightException;
 use FastRoute\Dispatcher;
 use Hyperf\Di\Annotation\AnnotationCollector;
+use Hyperf\Di\Annotation\Inject;
 use Hyperf\HttpServer\Router\Dispatched;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -18,6 +19,7 @@ use Psr\Http\Server\RequestHandlerInterface;
 class AuthMiddleware implements MiddlewareInterface
 {
     /**
+     * @Inject
      * @var \Alexzy\HyperfAuth\Auth
      */
     protected $auth;
