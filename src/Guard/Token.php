@@ -133,9 +133,7 @@ class Token implements LoginGuardInterface
         if (!isset($token)) {
             return null;
         }
-        $token = base64_decode($token);
-        $user_id = substr_replace($token, '', 0, 32);
-        $token = substr($token, 0, 32);
+        $user_id = substr_replace(base64_decode($token), '', 0, 32);
         return $this->prefixKey($user_id) . $token;
     }
 
