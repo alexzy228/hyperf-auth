@@ -10,6 +10,7 @@ use Alexzy\HyperfAuth\Exception\NeedRightException;
 use FastRoute\Dispatcher;
 use Hyperf\Di\Annotation\AnnotationCollector;
 use Hyperf\Di\Annotation\Inject;
+use Hyperf\HttpServer\Contract\RequestInterface;
 use Hyperf\HttpServer\Router\Dispatched;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -23,6 +24,12 @@ class AuthMiddleware implements MiddlewareInterface
      * @var \Alexzy\HyperfAuth\Auth
      */
     protected $auth;
+
+    /**
+     * @Inject
+     * @var RequestInterface
+     */
+    protected $request;
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
@@ -40,7 +47,7 @@ class AuthMiddleware implements MiddlewareInterface
             return $handler->handle($request);
         }
 
-        $uri = $request->path();
+        $uri = $this->request->path();
         if (!$this->auth->check($uri)) {
             throw new NeedRightException('您没有权限');
         }
