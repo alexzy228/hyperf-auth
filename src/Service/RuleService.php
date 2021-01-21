@@ -4,6 +4,7 @@
 namespace Alexzy\HyperfAuth\Service;
 
 use Alexzy\HyperfAuth\AuthInterface\AuthRuleDaoInterface;
+use Alexzy\HyperfAuth\Exception\ErrorException;
 use Alexzy\HyperfAuth\Exception\UnauthorizedException;
 use Exception;
 use Hyperf\Di\Annotation\Inject;
@@ -25,7 +26,7 @@ class RuleService
     public function __construct()
     {
         if (!$this->authService->isSuperAdmin()) {
-            throw new UnauthorizedException('仅超级管理组可以访问');
+            throw new ErrorException('仅超级管理组可以访问');
         }
     }
 
@@ -49,12 +50,11 @@ class RuleService
      * 创建规则
      * @param $data
      * @return mixed
-     * @throws Exception
      */
     public function createRule($data)
     {
         if (!$data['is_menu'] && !$data['pid']) {
-            throw new Exception('非菜单规则节点必须有父级');
+            throw new ErrorException('非菜单规则节点必须有父级');
         }
         return $this->authRuleDao->insertRule($data);
     }
@@ -63,23 +63,22 @@ class RuleService
      * 编辑规则
      * @param $data
      * @return mixed
-     * @throws Exception
      */
     public function editRule($data)
     {
         $rule = $this->authRuleDao->getOneRuleById($data['id']);
         if (!$rule) {
-            throw new Exception('记录未找到');
+            throw new ErrorException('记录未找到');
         }
         if (!$data['is_menu'] && !$data['pid']) {
-            throw new Exception('非菜单规则节点必须有父级');
+            throw new ErrorException('非菜单规则节点必须有父级');
         }
         if ($data['pid'] != $rule['pid']) {
             //获取当前节点的所有子节点ID
             $all_rule = $this->authRuleDao->getRuleList();
             $children_ids = make(TreeService::class)->init($all_rule)->getChildrenIds($rule['pid']);
             if (in_array($data['pid'], $children_ids)) {
-                throw new Exception("变更的父组别不能是它的子组别");
+                throw new ErrorException("变更的父组别不能是它的子组别");
             }
         }
         return $this->authRuleDao->updateRuleById($data['id'], $data);
@@ -98,7 +97,7 @@ class RuleService
         $del_ids = [];
         foreach ($ids as $k => $v) {
             $all_rule = $this->authRuleDao->getRuleList();
-            $children_ids = make(TreeService::class)->init($all_rule)->getChildrenIds($v,true);
+            $children_ids = make(TreeService::class)->init($all_rule)->getChildrenIds($v, true);
             $del_ids = array_merge($del_ids, $children_ids);
         }
         return $this->authRuleDao->deleteRulesById($del_ids);
