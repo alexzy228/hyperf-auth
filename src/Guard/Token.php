@@ -56,7 +56,7 @@ class Token implements LoginGuardInterface
         try {
             $token = $token ?? $this->parseToken();
             if (!$token) {
-                throw new UnauthorizedException('The token is required.');
+                throw new UnauthorizedException('token 是必须的');
             }
             if (Context::has($token)) {
                 $result = Context::get($token);
@@ -77,7 +77,7 @@ class Token implements LoginGuardInterface
                 $exception->getMessage(),
                 $exception
             );
-            Context::set($token, $newException);
+            if ($token) Context::set($token, $newException);
             throw $newException;
         }
     }
