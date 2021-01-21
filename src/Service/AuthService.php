@@ -186,4 +186,13 @@ class  AuthService
         }
         return false;
     }
+
+    /**
+     * 判断当前管理员是否为超级管理员
+     * @return bool
+     */
+    public function isSuperAdmin()
+    {
+        return in_array('*', $this->getRuleIds()) ? true : false;
+    }
 }

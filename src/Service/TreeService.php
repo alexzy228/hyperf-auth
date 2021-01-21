@@ -69,7 +69,7 @@ class TreeService
      * @param $with_self
      * @return array
      */
-    public function getChildrenIds($id, $with_self)
+    public function getChildrenIds($id, $with_self = false)
     {
         $children_list = $this->getChildren($id, $with_self);
         $children_ids = [];
@@ -118,7 +118,7 @@ class TreeService
      * @param $with_self
      * @return array
      */
-    public function getParents($id, $with_self)
+    public function getParents($id, $with_self = false)
     {
         $new_arr = [];
         foreach ($this->getArr() as $value) {
@@ -159,5 +159,47 @@ class TreeService
             $parents_ids[] = $v['id'];
         }
         return $parents_ids;
+    }
+
+    /**
+     * 获取树状结构列表
+     * @param $my_id
+     * @return array
+     */
+    public function getTreeArray($my_id)
+    {
+        $childes = $this->getChild($my_id);
+        $num = 0;
+        $data = [];
+        if ($childes) {
+            foreach ($childes as $id => $value) {
+                $data[$num] = $value;
+                $data[$num]['childList'] = $this->getTreeArray($id);
+                $num++;
+            }
+        }
+        return $data;
+    }
+
+    /**
+     * 转换树状列表为一维数组
+     * @param array $data
+     * @return array
+     */
+    public function getTreeList($data = [])
+    {
+        $arr = [];
+        foreach ($data as $key => $value) {
+            $child_list = isset($value['childList']) ? $value['childList'] : [];
+            unset($value['childList']);
+            $value['hasChild'] = $child_list ? 1 : 0;
+            if ($value['id']) {
+                $arr[] = $value;
+            }
+            if ($child_list) {
+                $arr = array_merge($arr, $this->getTreeList($child_list));
+            }
+        }
+        return $arr;
     }
 }
