@@ -18,6 +18,7 @@ class Auth
     protected $loginGuard;
 
     /**
+     * @Inject
      * @var AuthService
      */
     protected $authService;
