@@ -52,24 +52,26 @@ class Token implements LoginGuardInterface
 
     public function user(?string $token = null): ?UserModelInterface
     {
-        $token = $token ?? $this->parseToken();
-        if (Context::has($token)) {
-            $result = Context::get($token);
-            if ($result instanceof \Throwable) {
-                throw $result;
-            }
-            return $result ?: null;
-        }
+
         try {
-            if ($token) {
-                /** @var UserModelInterface $user */
-                $user = $this->cache->getCache()->get($token);
-                $uid = $user->getId() ?? null;
-                $user = $uid ? $this->user->getUserById($uid) : null;
-                Context::set($token, $user ?: 0);
-                return $user;
+            $token = $token ?? $this->parseToken();
+            if (!$token) {
+                throw new UnauthorizedException('The token is required.');
             }
-            throw new UnauthorizedException('The token is required.');
+            if (Context::has($token)) {
+                $result = Context::get($token);
+                if ($result instanceof \Throwable) {
+                    throw $result;
+                }
+                return $result ?: null;
+            }
+
+            /** @var UserModelInterface $user */
+            $user = $this->cache->getCache()->get($token);
+            $uid = $user->getId() ?? null;
+            $user = $uid ? $this->user->getUserById($uid) : null;
+            Context::set($token, $user ?: 0);
+            return $user;
         } catch (\Throwable $exception) {
             $newException = $exception instanceof AuthException ? $exception : new UnauthorizedException(
                 $exception->getMessage(),
